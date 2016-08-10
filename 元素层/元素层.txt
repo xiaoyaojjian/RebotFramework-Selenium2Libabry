@@ -1,0 +1,17 @@
+*** Settings ***
+Resource          元素层.txt
+Library           Selenium2Library
+
+*** Keywords ***
+打开浏览器
+    [Arguments]    ${url}
+    Open Browser    ${url}    ff
+
+校验页面Title
+    [Arguments]    ${search_txt}
+    sleep    2
+    ${title}    Get Title
+    Should Contain    ${title}    ${search_txt}
+
+关闭浏览器
+    Close Browser

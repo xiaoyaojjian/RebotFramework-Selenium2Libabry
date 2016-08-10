@@ -1,0 +1,26 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../流程层/流程层.txt
+
+*** Test Cases ***
+正确的用户密码登录
+    正确用户密码登录流程    http://mail.126.com    auto_tester    123qwe
+
+错误的用户密码登录
+    [Template]    LoginTemplate
+    ${EMPTY}    415132123
+    skikd    ${EMPTY}
+    admin    12345qwe
+    auto_tester    kksnrr
+
+用户名为空登录
+    [Template]    LoginTemplate
+
+密码为空时登录
+    不正确的用户密码登录流程    http://mail.126.com    admin    ${EMPTY}
+
+用户名错误登录
+    不正确的用户密码登录流程    http://mail.126.com    tteessr    123qwe
+
+密码错误时登录
+    不正确的用户密码登录流程    http://mail.126.com    auto_tester    djd83n

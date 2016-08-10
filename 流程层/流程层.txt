@@ -1,0 +1,26 @@
+*** Settings ***
+Resource          ../组件层/LoginPage.txt
+Resource          ../元素层/元素层.txt
+Library           Selenium2Library
+
+*** Keywords ***
+正确用户密码登录流程
+    [Arguments]    ${url}    ${username}    ${password}
+    打开浏览器    ${url}
+    ${ua} =    Execute Javascript    return window.location.href;
+    log    ${ua}
+    输入用户名    ${username}
+    输入密码    ${password}
+    点击登录按钮
+    验证登录是否成功    ${username}
+    关闭浏览器
+    ${EXECDIR}
+
+不正确的用户密码登录流程
+    [Arguments]    ${url}    ${username}    ${password}
+    打开浏览器    ${url}
+    输入用户名    ${username}
+    输入密码    ${password}
+    点击登录按钮
+    错误用户名密码验证
+    关闭浏览器

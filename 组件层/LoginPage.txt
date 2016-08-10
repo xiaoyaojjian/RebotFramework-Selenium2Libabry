@@ -1,0 +1,32 @@
+*** Settings ***
+Resource          LoginPage.txt
+Library           Selenium2Library
+Resource          ../流程层/流程层.txt
+
+*** Keywords ***
+输入用户名
+    [Arguments]    ${username}
+    Input Text    id=idInput    ${username}
+
+输入密码
+    [Arguments]    ${password}
+    Input Password    id=pwdInput    ${password}
+
+点击登录按钮
+    Click Button    id=loginBtn
+
+验证登录是否成功
+    [Arguments]    ${username}
+    Wait Until Page Contains Element    id=spnUid    10    元素未找到
+    ${uid}    Get Text    id=spnUid
+    Run Keyword If    '${username}' in '${uid}'    log    登录成功    ELSE    log    登录失败
+
+错误用户名密码验证
+    Wait Until Page Contains Element    xpath=/html/body/section/div[3]/div[2]/div[1]/p    10    元素未找到
+    ${showspan}    Get Text    xpath=/html/body/section/div[3]/div[2]/div[1]/p
+    Run Keyword If    '错误' in '${showspan}'    log    ${showspan}    ELSE IF    '输入' in '${showspan}'    log
+    ...    ${showspan}    ELSE    log    ${showspan}
+
+LoginTemplate
+    [Arguments]    ${username}    ${password}
+    不正确的用户密码登录流程    http://mail.126.com    ${username}    ${password}
